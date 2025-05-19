@@ -33,6 +33,6 @@ export default defineConfig({
     test: {
         environment: 'jsdom',
         globals: true,
-        include: ['tests/*.ts'],
+        include: ['../tests/*.ts'],  // b/c root dir is example
     },
 })
