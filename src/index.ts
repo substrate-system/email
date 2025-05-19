@@ -1,7 +1,7 @@
 import { signal, computed, effect } from 'alien-signals'
 import { Input } from '@substrate-system/input'
-import Debug from '@substrate-system/debug'
-const debug = Debug()
+// import Debug from '@substrate-system/debug'
+// const debug = Debug()
 
 // for docuement.querySelector
 declare global {
@@ -22,13 +22,14 @@ export class SubstrateEmail extends Input {
     }
 
     _shouldShowErr:ReturnType<typeof computed<boolean>>
-    _prev:{ emailOk:boolean|null }
+    _hasInput:boolean = false
+    _lastEvent:'invalid'|'valid'|null = null
 
     constructor () {
         super()
         this._email = {
             hasValue: signal(false),
-            emailOk: signal(false),
+            emailOk: signal<boolean>(this.isValid),
             hasFocused: signal(false),
             hasBlurred: signal(false)
         }
@@ -52,34 +53,33 @@ export class SubstrateEmail extends Input {
                 return this.unRenderError()
             }
 
-            debug('show the error')
-
             // else, show the error message
             this.renderError()
         })
-
-        this._prev = {
-            emailOk: null  // null means it has not been set yet
-        }
 
         // emit events
         // call this whenever emailOk changes
         // that is, whenever validity changes
         effect(() => {
             const ok = this._email.emailOk()
-            debug('ok????', ok)
-            if (!ok && this._prev.emailOk) {
+
+            if (!ok && this._lastEvent === 'valid') {
                 // if we are invalid, and previously were valid
                 this.dispatchEvent(new CustomEvent('invalid'))
+                this._lastEvent = 'invalid'
             }
 
-            if (ok && this._prev.emailOk === false) {
+            if (ok && this._lastEvent === 'invalid') {
                 this.dispatchEvent(new CustomEvent('valid'))
+                this._lastEvent = 'valid'
             }
 
-            debug('prev ok up here', this._prev.emailOk)
-
-            this._prev.emailOk = ok
+            if (this._lastEvent === null) {
+                const value = ok ? 'valid' : 'invalid'
+                const ev = new CustomEvent(value)
+                this.dispatchEvent(ev)
+                this._lastEvent = value
+            }
         })
     }
 
@@ -107,8 +107,6 @@ export class SubstrateEmail extends Input {
             this._email.hasBlurred(true)
         })
 
-        debug('we are valid??', this.isValid)
-
         input?.addEventListener('focus', () => {
             this._email.hasFocused(true)
         })
@@ -116,35 +114,30 @@ export class SubstrateEmail extends Input {
         input?.addEventListener('input', (ev) => {
             const email = (ev.target as HTMLInputElement).value
 
+            if (!this._hasInput) this._hasInput = true
+
             if (this.hasAttribute('required') && !email) {
                 this._email.emailOk(false)
             }
 
             const isOk = isValid(email, this.hasAttribute('required'))
-            debug('__prev ok????????', this._prev.emailOk)
-            debug('aaaaaaa', isOk)
-            debug('bbbbbbbbbbb', this._email.emailOk())
 
             // if validity does not match current validity, then set it
             if (isOk !== this._email.emailOk()) {
-                debug('is okkkkkkkk', isOk)
                 this._email.emailOk(isOk)
             }
         })
     }
 
     get isValid ():boolean {
-        debug('has attttrrrrrrrrrrr', this.hasAttribute('reuqired'))
         if (this.hasAttribute('required')) {
-            debug('oh no')
             return !!(this.input?.value && isValid(this.input.value, true))
         } else {
-            debug('!!!')
             // is not required
             if (!this.input?.value) {
                 return true
             }
-            return isValid(this.input!.value, false)
+            return isValid(this.input?.value, false)
         }
     }
 

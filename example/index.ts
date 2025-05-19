@@ -44,7 +44,6 @@ document.getElementById('main')!.innerHTML += `
 `
 
 const input = qs('form.demo-one substrate-email')
-debug('the email input', input)
 // @ts-expect-error dev
 window.input = input
 
@@ -56,4 +55,15 @@ input?.addEventListener('valid', ev => {
 input?.addEventListener('invalid', ev => {
     debug('no longer valid....', ev)
     qs('substrate-button')!.disabled = true
+})
+
+const inputTwo = qs('form.demo-two substrate-email')
+inputTwo?.addEventListener('valid', (ev) => {
+    debug('form two is valid!', ev);
+    (qs('.demo-two substrate-button') as SubstrateButton).disabled = false
+})
+
+inputTwo?.addEventListener('invalid', ev => {
+    debug('form two is invalid......', ev);
+    (qs('.demo-two substrate-button') as SubstrateButton).disabled = true
 })
