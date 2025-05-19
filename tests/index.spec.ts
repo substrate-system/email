@@ -1,8 +1,14 @@
 import { expect, test } from 'vitest'
 import { SubstrateEmail } from '../src/index.js'
 
-test('get started', () => {
-    expect(SubstrateEmail).toBeTruthy()
+test('Render the element', async () => {
+    expect(SubstrateEmail.tag).toEqual('substrate-email')
+    // document.body.innerHTML += `
+    //     <substrate-email></substrate-email>
+    // `
+
+    // const el = await waitFor('substrate-email')
+    // expect(el).toBeTruthy()
 })
 
 // import { test } from '@substrate-system/tapzero'

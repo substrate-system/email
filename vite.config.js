@@ -29,5 +29,10 @@ export default defineConfig({
         outDir: '../public',
         emptyOutDir: true,
         sourcemap: 'inline'
-    }
+    },
+    test: {
+        environment: 'jsdom',
+        globals: true,
+        include: ['tests/*.ts'],
+    },
 })
