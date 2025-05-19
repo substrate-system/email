@@ -24,6 +24,20 @@ Web component for email inputs.
 
 <!-- toc -->
 
+- [Install](#install)
+- [API](#api)
+  * [ESM](#esm)
+  * [Common JS](#common-js)
+- [CSS](#css)
+  * [Bundler](#bundler)
+  * [CSS imports](#css-imports)
+  * [Customize CSS via some variables](#customize-css-via-some-variables)
+- [Use](#use)
+  * [HTML](#html)
+  * [pre-built](#pre-built)
+
+<!-- tocstop -->
+
 ## Install
 
 ```sh
