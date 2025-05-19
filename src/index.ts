@@ -201,6 +201,9 @@ export class SubstrateEmail extends Input {
             </label>
             ${super.render()}
         `
+
+        const el = this.querySelector('input')
+        el?.setAttribute('aria-invalid', '' + !this.isValid)
     }
 }
 
@@ -208,7 +211,7 @@ export function isValid (email:string, required:boolean = true):boolean {
     if (!email && !required) return true
     const parts = email.split('.')
 
-    return (email.split('@').length === 2 &&
+    return (email.split('@').filter(Boolean).length === 2 &&
         parts.length > 1 &&
         parts.reduce((ok, part) => {
             // no consecutive dots, no start or end with dot
