@@ -15,15 +15,35 @@ const qs = document.querySelector.bind(document)
 window.qs = document.querySelector.bind(document)
 
 document.getElementById('main')!.innerHTML += `
-    <form>
+    <form class="demo-one">
+        <div>
+            Here the email input is not required.
+        </div>
+
         <substrate-email label="email" name="alice" label="email"></substrate-email>
+        <div id="controls">
+            <substrate-button>Submit</substrate-button>
+        </div>
+    </form>
+
+    <form class="demo-two">
+        <div>
+            Here the email input *is* required.
+        </div>
+
+        <substrate-email
+            label="email"
+            name="alice"
+            label="email"
+            required
+        ></substrate-email>
         <div id="controls">
             <substrate-button disabled>Submit</substrate-button>
         </div>
     </form>
 `
 
-const input = qs('substrate-email')
+const input = qs('form.demo-one substrate-email')
 debug('the email input', input)
 // @ts-expect-error dev
 window.input = input

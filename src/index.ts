@@ -1,5 +1,7 @@
 import { signal, computed, effect } from 'alien-signals'
 import { Input } from '@substrate-system/input'
+import Debug from '@substrate-system/debug'
+const debug = Debug()
 
 // for docuement.querySelector
 declare global {
@@ -12,8 +14,14 @@ export class SubstrateEmail extends Input {
     static observedAttributes = ['name', 'disabled']
     static tag = 'substrate-email'
 
-    _email
-    _shouldShowErr
+    _email:{
+        hasValue:ReturnType<typeof signal<boolean>>;
+        emailOk:ReturnType<typeof signal<boolean>>;
+        hasFocused:ReturnType<typeof signal<boolean>>;
+        hasBlurred:ReturnType<typeof signal<boolean>>;
+    }
+
+    _shouldShowErr:ReturnType<typeof computed<boolean>>
     _prev:{ emailOk:boolean|null }
 
     constructor () {
@@ -33,11 +41,18 @@ export class SubstrateEmail extends Input {
             )
         })
 
+        // non-required email input
+        // if it has a value, and is invalid,
+        // then emit an 'invalid' event, when it changes from valid to invalid
+        // that is, when you enter some text
+
         // show error UI
         effect(() => {
             if (!this._shouldShowErr()) {
                 return this.unRenderError()
             }
+
+            debug('show the error')
 
             // else, show the error message
             this.renderError()
@@ -52,13 +67,17 @@ export class SubstrateEmail extends Input {
         // that is, whenever validity changes
         effect(() => {
             const ok = this._email.emailOk()
+            debug('ok????', ok)
             if (!ok && this._prev.emailOk) {
+                // if we are invalid, and previously were valid
                 this.dispatchEvent(new CustomEvent('invalid'))
             }
 
             if (ok && this._prev.emailOk === false) {
                 this.dispatchEvent(new CustomEvent('valid'))
             }
+
+            debug('prev ok up here', this._prev.emailOk)
 
             this._prev.emailOk = ok
         })
@@ -88,6 +107,8 @@ export class SubstrateEmail extends Input {
             this._email.hasBlurred(true)
         })
 
+        debug('we are valid??', this.isValid)
+
         input?.addEventListener('focus', () => {
             this._email.hasFocused(true)
         })
@@ -100,16 +121,25 @@ export class SubstrateEmail extends Input {
             }
 
             const isOk = isValid(email, this.hasAttribute('required'))
+            debug('__prev ok????????', this._prev.emailOk)
+            debug('aaaaaaa', isOk)
+            debug('bbbbbbbbbbb', this._email.emailOk())
+
+            // if validity does not match current validity, then set it
             if (isOk !== this._email.emailOk()) {
+                debug('is okkkkkkkk', isOk)
                 this._email.emailOk(isOk)
             }
         })
     }
 
     get isValid ():boolean {
+        debug('has attttrrrrrrrrrrr', this.hasAttribute('reuqired'))
         if (this.hasAttribute('required')) {
+            debug('oh no')
             return !!(this.input?.value && isValid(this.input.value, true))
         } else {
+            debug('!!!')
             // is not required
             if (!this.input?.value) {
                 return true
