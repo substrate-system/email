@@ -3,12 +3,11 @@
 [![types](https://img.shields.io/npm/types/@substrate/email?style=flat-square)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
 [![install size](https://packagephobia.com/badge?p=@substrate/email)](https://packagephobia.com/result?p=@substrate/email)
-[![GZip size](https://img.badgesize.io/https%3A%2F%2Fesm.sh%2F%40substrate-system%2Fbutton%2Fes2022%2Fbutton.mjs?compression=gzip&style=flat-square)](https://esm.sh/@substrate-system/button/es2022/button.mjs)
 [![GZip size](https://img.badgesize.io/https%3A%2F%2Fesm.sh%2F%40substrate-system%2Femail%2Fes2022%2Femail.mjs?compression=gzip&style=flat-square)](https://esm.sh/@substrate-system/email/es2022/email.mjs)
-[![dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg?style=flat-square)](package.json)
 [![semantic versioning](https://img.shields.io/badge/semver-2.0.0-blue?logo=semver&style=flat-square)](https://semver.org/)
 [![Common Changelog](https://nichoth.github.io/badge/common-changelog.svg)](./CHANGELOG.md)
-[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![license](https://img.shields.io/badge/license-Polyform_Small_Business-249fbc?style=flat-square)](LICENSE)
+
 
 Web component for email inputs.
 
