@@ -212,6 +212,7 @@ export function isValid (email:string, required:boolean = true):boolean {
     const parts = email.split('.')
 
     return (email.split('@').filter(Boolean).length === 2 &&
+        parts.flatMap(part => part.split('@')).filter(Boolean).length > 2 &&
         parts.length > 1 &&
         parts.reduce((ok, part) => {
             // no consecutive dots, no start or end with dot
