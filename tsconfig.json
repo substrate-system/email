@@ -24,8 +24,8 @@
   },
   "include": [
     "example",
-    "src/**/*",
-    "test",
+    "src",
+    "tests",
     "lib.es5.d.ts"
   ]
 }
