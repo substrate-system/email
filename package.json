@@ -10,8 +10,7 @@
   "scripts": {
     "lint": "eslint \"./**/*.{ts,js}\"",
     "build-tests": "esbuild test/index.ts --target=es2020 --bundle --keep-names > test/test-bundle.js",
-    "test": "vitest run",
-    "//test": "npm run lint && npm run build && npm run build-tests && npm run test-tape-run",
+    "test": "npm run build && npm run build-tests && npm run test-tape-run",
     "test-tape-run": "cat test/index.html | tape-run --input=html --static=test | tap-spec",
     "build-css": "postcss src/index.css --use postcss-nesting > dist/index.css",
     "build-css:min": "postcss src/index.css --use cssnano postcss-nesting > dist/index.min.css",
@@ -63,7 +62,6 @@
     "esbuild": "^0.25.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
-    "jsdom": "^26.1.0",
     "markdown-toc": "^1.2.0",
     "postcss": "^8.5.1",
     "postcss-cli": "^11.0.0",
@@ -71,10 +69,10 @@
     "stylelint": "^16.9.0",
     "stylelint-config-standard": "^38.0.0",
     "tap-spec": "^5.0.0",
+    "tape-run": "^11.0.0",
     "typedoc": "^0.28.1",
     "typescript": "^5.7.3",
-    "vite": "^6.0.11",
-    "vitest": "^3.1.4"
+    "vite": "^6.0.11"
   },
   "author": "nichoth <nichoth@nichoth.com> (https://nichoth.com)",
   "license": "MIT"

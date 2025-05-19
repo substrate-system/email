@@ -31,8 +31,17 @@ export default defineConfig({
         sourcemap: 'inline'
     },
     test: {
-        environment: 'jsdom',
+        // environment: 'jsdom',
         globals: true,
         include: ['../tests/*.ts'],  // b/c root dir is example
+        browser: {
+            provider: 'playwright', // or 'webdriverio'
+            headless: true,
+            enabled: true,
+            // at least one instance is required
+            instances: [
+                { browser: 'chromium' },
+            ],
+        },
     },
 })
