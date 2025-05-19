@@ -25,11 +25,15 @@ document.getElementById('main')!.innerHTML += `
 
 const input = qs('substrate-email')
 debug('the email input', input)
+// @ts-expect-error dev
+window.input = input
 
 input?.addEventListener('valid', ev => {
     debug('We are valid!', ev)
+    qs('substrate-button')!.disabled = false
 })
 
 input?.addEventListener('invalid', ev => {
     debug('no longer valid....', ev)
+    qs('substrate-button')!.disabled = true
 })

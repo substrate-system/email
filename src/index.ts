@@ -1,6 +1,5 @@
+import { signal, computed, effect } from 'alien-signals'
 import { Input } from '@substrate-system/input'
-import { createDebug } from '@substrate-system/debug'
-const debug = createDebug()
 
 // for docuement.querySelector
 declare global {
@@ -10,19 +9,59 @@ declare global {
 }
 
 export class SubstrateEmail extends Input {
-    // Define the attributes to observe
-    // need this for `attributeChangedCallback`
-    static observedAttributes = ['name', 'id']
+    static observedAttributes = ['name']
     static tag = 'substrate-email'
 
-    hasFocused:boolean
-    hasBlurred:boolean
-    _shouldErr:boolean = false
+    _email
+    _shouldShowErr
+    _prev:{ emailOk:boolean|null }
 
     constructor () {
         super()
-        this.hasFocused = false
-        this.hasBlurred = false
+        this._email = {
+            hasValue: signal(false),
+            emailOk: signal(false),
+            hasFocused: signal(false),
+            hasBlurred: signal(false)
+        }
+
+        this._shouldShowErr = computed<boolean>(() => {
+            return (
+                this._email.hasFocused() &&
+                this._email.hasBlurred() &&
+                this._email.emailOk() === false
+            )
+        })
+
+        // show error UI
+        effect(() => {
+            if (!this._shouldShowErr()) {
+                return this.unRenderError()
+            }
+
+            // else, show the error message
+            this.renderError()
+        })
+
+        this._prev = {
+            emailOk: null  // null means it has not been set yet
+        }
+
+        // emit events
+        // call this whenever emailOk changes
+        // that is, whenever validity changes
+        effect(() => {
+            const ok = this._email.emailOk()
+            if (!ok && this._prev.emailOk) {
+                this.dispatchEvent(new CustomEvent('invalid'))
+            }
+
+            if (ok && this._prev.emailOk === false) {
+                this.dispatchEvent(new CustomEvent('valid'))
+            }
+
+            this._prev.emailOk = ok
+        })
     }
 
     get label () {
@@ -33,91 +72,69 @@ export class SubstrateEmail extends Input {
         return !!(this.input?.value)
     }
 
-    // /**
-    //  * @see {@link https://gomakethings.com/how-to-detect-when-attributes-change-on-a-web-component/#organizing-your-code Go Make Things article}
-    //  */
-    // handleChange_name (_oldValue, newValue) {
-    //     if (!this.input) return
-    //     this.input.name = newValue
-    // }
-
     /**
-     * Runs when the value of an observed attribute is changed
-     *
-     * @param  {string} name     The attribute name
-     * @param  {string} oldValue The old attribute value
-     * @param  {string} newValue The new attributhis, te value
+     * @see {@link https://gomakethings.com/how-to-detect-when-attributes-change-on-a-web-component/#organizing-your-code Go Make Things article}
      */
-    attributeChangedCallback (name:string, oldValue:string, newValue:string) {
-        const handler = this[`handleChange_${name}`];
-        (handler && handler.call(this, oldValue, newValue))
-        this.render()
-    }
-
-    disconnectedCallback () {
-        debug('disconnected')
+    handleChange_name (_oldValue, newValue) {
+        if (!this.input) return
+        this.input.name = newValue
     }
 
     connectedCallback () {
         this.render()
         const input = this.input
+
         input?.addEventListener('blur', () => {
-            this.hasBlurred = true
-            this._showError()
+            this._email.hasBlurred(true)
         })
 
         input?.addEventListener('focus', () => {
-            this.hasBlurred = false
-            this.hasFocused = true
-            this._showError()
+            this._email.hasFocused(true)
         })
 
-        input?.addEventListener('input', () => {
-            this._showError()
+        input?.addEventListener('input', (ev) => {
+            const email = (ev.target as HTMLInputElement).value
+
+            if (this.hasAttribute('required') && !email) {
+                this._email.emailOk(false)
+            }
+
+            const isOk = isValid(email, this.hasAttribute('required'))
+            if (isOk !== this._email.emailOk()) {
+                this._email.emailOk(isOk)
+            }
         })
     }
 
     get isValid ():boolean {
         if (this.hasAttribute('required')) {
-            return !!(this.input?.value && isValid(this.input.value))
+            return !!(this.input?.value && isValid(this.input.value, true))
         } else {
             // is not required
             if (!this.input?.value) {
                 return true
             }
-            return isValid(this.input!.value)
+            return isValid(this.input!.value, false)
         }
     }
 
-    _shouldShowError ():boolean {
-        this._shouldErr = (
-            !this.isValid &&
-            this.hasFocused &&
-            this.hasBlurred
-        )
-
-        return this._shouldErr
-    }
-
-    _showError () {
+    unRenderError () {
         const email = this.querySelector('input')
         const label = this.querySelector('label')
-        const shouldErr = this._shouldShowError()
 
-        if (!shouldErr) {
-            // don't show an error
-            email?.classList.remove('error')
-            label?.classList.remove('error')
-            if (this.classList.contains('error')) {
-                // if there is an error message, then remove it
-                label?.removeChild(label.lastChild!)
-                this.classList.remove('error')
-            }
-
-            return
+        email?.classList.remove('error')
+        email?.setAttribute('aria-invalid', 'false')
+        label?.classList.remove('error')
+        if (this.classList.contains('error')) {
+            // if there is an error message, then remove it
+            label?.removeChild(label.lastChild!)
+            this.classList.remove('error')
         }
+    }
 
-        // else, shouldErr is true; we are invalid, should show message
+    renderError () {
+        const email = this.querySelector('input')
+        const label = this.querySelector('label')
         let msg
         if (this.hasAttribute('required')) {
             if (!this.hasValue) {
@@ -164,38 +181,8 @@ export class SubstrateEmail extends Input {
     }
 }
 
-// // check email validity
-// email?.addEventListener('input', (ev) => {
-//     const input = ev.currentTarget as HTMLInputElement
-//     const email = input?.value.trim()
-//     if (!email) {
-//         startBatch()
-//         emailHasValue(false)
-//         emailOk(false)
-//         endBatch()
-//     }
-//     const parts = email.split('.')
-
-//     const isValid = (
-//         email.split('@').length === 2 &&
-//         parts.length > 1 &&
-//         parts.reduce((ok, part) => {
-//             // no consecutive dots, no start or end with dot
-//             return !!(ok && part)
-//         }, true)
-//     )
-
-//     if (isValid !== emailOk()) {
-//         startBatch()
-//         emailHasValue(!!email)
-//         emailOk(isValid)
-//         endBatch()
-//     }
-
-//     emailHasValue(!!email)
-// })
-
-export function isValid (email:string):boolean {
+export function isValid (email:string, required:boolean = true):boolean {
+    if (!email && !required) return true
     const parts = email.split('.')
 
     return (email.split('@').length === 2 &&
