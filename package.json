@@ -45,9 +45,14 @@
       ]
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "@substrate-system/input": "^0.0.4",
+    "alien-signals": "^2.0.5"
+  },
   "devDependencies": {
     "@bicycle-codes/dom": "^0.1.2",
+    "@substrate-system/button": "^0.0.16",
+    "@substrate-system/css-normalize": "^0.0.13",
     "@substrate-system/debug": "^0.9.0",
     "@substrate-system/tapzero": "^0.10.13",
     "@typescript-eslint/eslint-plugin": "^8.7.0",

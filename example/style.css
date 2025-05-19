@@ -1,0 +1,49 @@
+:root {
+    --substrate-focus: #09f;
+    --error: red;
+}
+
+button {
+    transition: all 0.2s;
+    cursor: pointer;
+    outline: 2px solid transparent;
+
+    &:focus, &:hover {
+        outline-color: black;
+    }
+}
+
+main {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    max-width: 30rem;
+    margin: 2rem auto;
+}
+
+form {
+    &>* {
+        margin-bottom: 1rem;
+    }
+}
+
+#controls {
+    text-align: right;
+}
+
+substrate-email {
+    & input.substrate-input {
+        outline: 2px solid transparent;
+        transition: all 0.2s;
+        border-bottom: 2px solid;
+
+        &:focus {
+            outline: 2px solid var(--substrate-focus);
+            border-color: var(--substrate-focus);
+        }
+    }
+
+    &.error {
+        & input.substrate-input {
+            border-bottom-color: var(--error);
+        }
+    }
+}

@@ -1,3 +1,22 @@
 substrate-email {
-    background-color: red;
+    display: block;
+
+    & label {
+        display: flex;
+        justify-content: space-between;
+
+        &.error {
+            & span.error {
+                text-decoration: underline red;
+            }
+        }
+    }
+
+    & input {
+        width: 100%;
+        padding: 0.4em;
+        font-size: 1rem;
+        border-radius: 0;
+        border: 1px solid;
+    }
 }
