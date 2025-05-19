@@ -35,7 +35,7 @@ substrate-email {
         transition: all 0.2s;
         border-bottom: 2px solid;
 
-        &:focus {
+        &:focus:not(.error) {
             outline: 2px solid var(--substrate-focus);
             border-color: var(--substrate-focus);
         }

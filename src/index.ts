@@ -9,7 +9,7 @@ declare global {
 }
 
 export class SubstrateEmail extends Input {
-    static observedAttributes = ['name']
+    static observedAttributes = ['name', 'disabled']
     static tag = 'substrate-email'
 
     _email
