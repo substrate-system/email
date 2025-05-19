@@ -27,7 +27,7 @@ Web component for email inputs.
 ## Install
 
 ```sh
-npm i -S @substrate/email
+npm i -S @substrate-system/email
 ```
 
 ## API
@@ -36,12 +36,12 @@ This exposes ESM and common JS via [package.json `exports` field](https://nodejs
 
 ### ESM
 ```js
-import { email } from '@substrate/email'
+import { email } from '@substrate-system/email'
 ```
 
 ### Common JS
 ```js
-const { email } = require('@substrate/email')
+const { email } = require('@substrate-system/email')
 ```
 
 ## CSS
@@ -51,12 +51,12 @@ const { email } = require('@substrate/email')
 The `package.json` exposes css, suitable for `vite` or `esbuild`:
 
 ```js
-import '@substrate/email/css'
+import '@substrate-system/email/css'
 ```
 
 Or minified:
 ```js
-import '@substrate/email/css/min'
+import '@substrate-system/email/css/min'
 ```
 
 ### CSS imports
@@ -89,20 +89,20 @@ call `.define()`.
 
 
 ```js
-import { SubstrateButton } from '@substrate-system/button'
+import { SubstrateEmail } from '@substrate-system/email'
 
 // create a web component named `substrate-email`
-SubstrateButton.define()
+SubstrateEmail.define()
 ```
 
 Override the `tag` property to change the tag name:
 ```js
-import { SubstrateButton } from '@substrate-system/button'
+import { SubstrateEmail } from '@substrate-system/email'
 
 // set a custom name
-SubstrateButton.tag = 'cool-input'
+SubstrateEmail.tag = 'cool-input'
 
-SubstrateButton.define()
+SubstrateEmail.define()
 ```
 
 ### HTML
@@ -118,8 +118,8 @@ accessible to your web server, then link to them in HTML.
 
 #### copy
 ```sh
-cp ./node_modules/@substrate/email/dist/index.min.js ./public/substrate-email.min.js
-cp ./node_modules/@substrate/email/dist/style.min.css ./public/substrate-email.css
+cp ./node_modules/@substrate-system/email/dist/index.min.js ./public/substrate-email.min.js
+cp ./node_modules/@substrate-system/email/dist/style.min.css ./public/substrate-email.css
 ```
 
 #### HTML
