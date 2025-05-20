@@ -10,9 +10,12 @@ const debug = Debug()
 SubstrateEmail.define()
 SubstrateButton.define()
 const qs = document.querySelector.bind(document)
+const qsa = document.querySelectorAll.bind(document)
 
 // @ts-expect-error dev
 window.qs = document.querySelector.bind(document)
+// @ts-expect-error dev
+window.qsa = qsa
 
 document.getElementById('main')!.innerHTML += `
     <form class="demo-one">
@@ -46,6 +49,13 @@ document.getElementById('main')!.innerHTML += `
 const input = qs('form.demo-one substrate-email')
 // @ts-expect-error dev
 window.input = input
+
+const forms = qsa('form')
+forms.forEach(form => {
+    form.addEventListener('submit', ev => {
+        ev.preventDefault()
+    })
+})
 
 input?.addEventListener('valid', ev => {
     debug('We are valid!', ev)
