@@ -18,7 +18,7 @@ Web component for email inputs.
   - errors are only shown if the input has been focused
   - errors are not shown until the input blurs
 * add a class to the element when it is not valid
-* emit `valid` and `invalid` events when it changes validity
+* emit `valid` and `invalid` events when validity changes
 
 
 [See a live demo](https://substrate-system.github.io/email/)
