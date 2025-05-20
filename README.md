@@ -2,7 +2,7 @@
 ![tests](https://github.com/substrate-system/email/actions/workflows/nodejs.yml/badge.svg)
 [![types](https://img.shields.io/npm/types/@substrate/email?style=flat-square)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
-[![install size](https://packagephobia.com/badge?p=@substrate/email)](https://packagephobia.com/result?p=@substrate/email)
+[![install size](https://flat.badgen.net/packagephobia/install/@substrate-system/email?cache-control=no-cache)](https://packagephobia.com/result?p=@bicycle-codes/keys)
 [![GZip size](https://img.badgesize.io/https%3A%2F%2Fesm.sh%2F%40substrate-system%2Femail%2Fes2022%2Femail.mjs?compression=gzip&style=flat-square)](https://esm.sh/@substrate-system/email/es2022/email.mjs)
 [![semantic versioning](https://img.shields.io/badge/semver-2.0.0-blue?logo=semver&style=flat-square)](https://semver.org/)
 [![Common Changelog](https://nichoth.github.io/badge/common-changelog.svg)](./CHANGELOG.md)
