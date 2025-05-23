@@ -6,7 +6,7 @@ import { Input } from '@substrate-system/input'
 // for docuement.querySelector
 declare global {
     interface HTMLElementTagNameMap {
-        'substrate-email': SubstrateEmail
+        'substrate-email':SubstrateEmail
     }
 }
 
