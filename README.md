@@ -1,5 +1,5 @@
 # email
-![tests](https://github.com/substrate-system/email/actions/workflows/nodejs.yml/badge.svg)
+[![tests](https://img.shields.io/github/actions/workflow/status/substrate-system/email/nodejs.yml?style=flat-square)](https://github.com/substrate-system/email/actions/workflows/nodejs.yml)
 [![types](https://img.shields.io/npm/types/@substrate-system/email?style=flat-square)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
 [![install size](https://flat.badgen.net/packagephobia/install/@substrate-system/email?cache-control=no-cache)](https://packagephobia.com/result?p=@substrate-system/email)
