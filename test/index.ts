@@ -2,7 +2,7 @@ import { test } from '@substrate-system/tapzero'
 import { waitFor, sleep } from '@substrate-system/dom'
 import { SubstrateEmail, isValid } from '../src/index.js'
 
-let el: SubstrateEmail
+let el:SubstrateEmail
 
 test('Input renders', async t => {
     t.plan(2)
