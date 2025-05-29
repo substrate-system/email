@@ -6,7 +6,7 @@
 [![GZip size](https://img.shields.io/bundlephobia/minzip/@substrate-system/email?style=flat-square&color=green)](https://bundlephobia.com/package/@substrate-system/email)
 [![semantic versioning](https://img.shields.io/badge/semver-2.0.0-blue?logo=semver&style=flat-square)](https://semver.org/)
 [![Common Changelog](https://nichoth.github.io/badge/common-changelog.svg)](./CHANGELOG.md)
-[![license](https://img.shields.io/badge/license-Polyform_Small_Business-249fbc?style=flat-square)](LICENSE)
+[![license](https://img.shields.io/badge/license-Big_Time-blue?style=flat-square)](LICENSE)
 
 
 Web component for email inputs.
@@ -45,7 +45,7 @@ Web component for email inputs.
 npm i -S @substrate-system/email
 ```
 
-## API
+## Modules
 
 This exposes ESM and common JS via [package.json `exports` field](https://nodejs.org/api/packages.html#exports).
 
@@ -57,6 +57,29 @@ import { email } from '@substrate-system/email'
 ### Common JS
 ```js
 const { email } = require('@substrate-system/email')
+```
+
+## Example
+
+See [./example](./example/), and [the demo page](https://substrate-system.github.io/email/).
+
+```js
+import { SubstrateEmail } from '@substrate-system/email'
+import { SubstrateButton } from '@substrate-system/button'
+SubstrateEmail.define()
+SubstrateButton.define()
+const qs = document.querySelector
+
+const input = qs('form substrate-email')
+input?.addEventListener('valid', ev => {
+    console.log('We are valid!', ev)
+    qs('substrate-button')!.disabled = false
+})
+
+input?.addEventListener('invalid', ev => {
+    console.log('no longer valid....', ev)
+    qs('substrate-button')!.disabled = true
+})
 ```
 
 ## CSS
