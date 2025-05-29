@@ -26,9 +26,10 @@ Web component for email inputs.
 <!-- toc -->
 
 - [Install](#install)
-- [API](#api)
+- [Modules](#modules)
   * [ESM](#esm)
   * [Common JS](#common-js)
+- [Example](#example)
 - [CSS](#css)
   * [Bundler](#bundler)
   * [CSS imports](#css-imports)
