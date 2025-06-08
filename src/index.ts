@@ -83,10 +83,6 @@ export class SubstrateEmail extends Input {
         })
     }
 
-    get label () {
-        return this.getAttribute('label')
-    }
-
     get hasValue ():boolean {
         return !!(this.input?.value)
     }
@@ -197,7 +193,7 @@ export class SubstrateEmail extends Input {
     render ():void {
         this.innerHTML = `
             <label>
-                <span>${this.label}</span>
+                <span>${this.getAttribute('label')}</span>
             </label>
             ${super.render()}
         `
