@@ -9,7 +9,7 @@ test('Input renders', async t => {
     SubstrateEmail.define()
 
     document.body.innerHTML += `
-        <substrate-email class="test">
+        <substrate-email class="test" name="test">
         </substrate-email>
     `
 
@@ -56,7 +56,7 @@ test('Required attribute behavior', async t => {
 
     // Create a required email input
     document.body.innerHTML += `
-        <substrate-email required label="Required Email">
+        <substrate-email required label="Required Email" name="tester">
         </substrate-email>
     `
 
@@ -82,7 +82,7 @@ test('Error display logic', async t => {
     document.body.innerHTML = ''
 
     document.body.innerHTML += `
-        <substrate-email label="Test Email">
+        <substrate-email label="Test Email" name="abc">
         </substrate-email>
     `
 
@@ -152,7 +152,7 @@ test('Custom error messages', async t => {
     // Create element with custom error message
     const customErrorMsg = 'Please provide a proper email address!'
     document.body.innerHTML += `
-        <substrate-email label="Custom Error" errormsg="${customErrorMsg}">
+        <substrate-email label="Custom Error" errormsg="${customErrorMsg}" name="def">
         </substrate-email>
     `
 
@@ -184,6 +184,7 @@ test('Required error message', async t => {
     const requiredMsg = 'Email is mandatory!'
     document.body.innerHTML += `
         <substrate-email 
+            name="ghi"
             label="Required" 
             required 
             requiredmsg="${requiredMsg}">
@@ -212,7 +213,7 @@ test('Event dispatching', async t => {
     document.body.innerHTML = ''
 
     document.body.innerHTML += `
-        <substrate-email label="Events Test">
+        <substrate-email label="Events Test" name="foo">
         </substrate-email>
     `
 
@@ -265,7 +266,7 @@ test('Accessibility attributes', async t => {
     document.body.innerHTML = ''
 
     document.body.innerHTML += `
-        <substrate-email label="Accessibility Test">
+        <substrate-email label="Accessibility Test" name="bar">
         </substrate-email>
     `
 
