@@ -36,6 +36,7 @@ document.getElementById('main')!.innerHTML += `
         </div>
 
         <substrate-email
+            placeholder="123@abc.com"
             label="email"
             name="alice"
             label="email"

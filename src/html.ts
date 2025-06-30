@@ -1,6 +1,6 @@
 import { type Attrs, html as input } from '@substrate-system/input/html'
 
-export function html (attrs:Attrs & { label:string }):string {
+export function html (attrs:Attrs & { label:string, placeholder:string }):string {
     // running in node?
     return typeof window === 'undefined' ?
         `<substrate-email>
