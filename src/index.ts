@@ -96,7 +96,9 @@ export class SubstrateEmail extends Input {
     }
 
     connectedCallback () {
-        this.render()
+        if (!this.innerHTML) {
+            this.render()
+        }
         const input = this.input
 
         input?.addEventListener('blur', () => {
