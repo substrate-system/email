@@ -2,13 +2,13 @@ substrate-email {
     display: block;
 
     & label {
-        display: flex;
-        justify-content: space-between;
+        & .label.error {
+            display: flex;
+            justify-content: space-between;
+        }
 
-        &.error {
-            & span.error {
-                text-decoration: underline red;
-            }
+        & span.errormsg {
+            text-decoration: underline var(--error, red);
         }
     }
 

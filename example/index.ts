@@ -23,7 +23,8 @@ document.getElementById('main')!.innerHTML += `
             Here the email input is not required.
         </div>
 
-        <substrate-email label="email" name="alice" label="email"></substrate-email>
+        <substrate-email label="email" name="alice" label="email" id="fooo">
+        </substrate-email>
         <div id="controls">
             <substrate-button>Submit</substrate-button>
         </div>
@@ -39,6 +40,7 @@ document.getElementById('main')!.innerHTML += `
             name="alice"
             label="email"
             required
+            requiredmsg="Mandatory!"
         ></substrate-email>
         <div id="controls">
             <substrate-button disabled>Submit</substrate-button>

@@ -168,7 +168,7 @@ test('Custom error messages', async t => {
     // Wait for effects to run
     await new Promise(resolve => setTimeout(resolve, 50))
 
-    const errorSpan = emailEl.querySelector('span.error') as HTMLSpanElement
+    const errorSpan = emailEl.querySelector('span.errormsg') as HTMLSpanElement
     t.ok(errorSpan, 'Error message element exists')
     t.equal(errorSpan.textContent, customErrorMsg,
         'Custom error message is displayed')
@@ -185,7 +185,7 @@ test('Required error message', async t => {
     document.body.innerHTML += `
         <substrate-email 
             name="ghi"
-            label="Required" 
+            label="the required email" 
             required 
             requiredmsg="${requiredMsg}">
         </substrate-email>
@@ -201,7 +201,7 @@ test('Required error message', async t => {
     // Wait for effects to run
     await new Promise(resolve => setTimeout(resolve, 50))
 
-    const errorSpan = emailEl.querySelector('.error') as HTMLSpanElement
+    const errorSpan = emailEl.querySelector('.errormsg') as HTMLSpanElement
     t.equal(errorSpan?.textContent, requiredMsg,
         'Custom required message is displayed')
 })

@@ -44,7 +44,7 @@ export class SubstrateEmail extends Input {
 
         // non-required email input
         // if it has a value, and is invalid,
-        // then emit an 'invalid' event, when it changes from valid to invalid
+        // then emit an 'invalid' event when it changes from valid to invalid
         // that is, when you enter some text
 
         // show error UI
@@ -137,6 +137,9 @@ export class SubstrateEmail extends Input {
         }
     }
 
+    /**
+     * Remove error message.
+     */
     unRenderError () {
         const email = this.querySelector('input')
         const label = this.querySelector('label')
@@ -153,12 +156,13 @@ export class SubstrateEmail extends Input {
 
     renderError () {
         const email = this.querySelector('input')
-        const label = this.querySelector('label')
+        const label = this.querySelector('span.label')
         let msg
         if (this.hasAttribute('required')) {
             if (!this.hasValue) {
                 msg = this.getAttribute('requiredmsg') || 'Email is required.'
                 email?.classList.add('error')
+                label?.classList.add('error')
                 email?.setAttribute('aria-invalid', 'true')
             } else {
                 // is required, and has value, but the value is invalid
@@ -177,14 +181,11 @@ export class SubstrateEmail extends Input {
                 'Please use a valid email address.')
         }
 
-        const el = label?.querySelector('.error')
+        const el = label?.querySelector('.errormsg')
         if (el) {
             el.innerHTML = msg
         } else {
-            label?.insertAdjacentHTML(
-                'beforeend',
-                `<span class="error">${msg}</span>`
-            )
+            label!.innerHTML += `<span class="errormsg">${msg}</span>`
         }
 
         this.classList.add('error')
@@ -193,9 +194,9 @@ export class SubstrateEmail extends Input {
     render ():void {
         this.innerHTML = `
             <label>
-                <span>${this.getAttribute('label')}</span>
+                <span class="label">${this.getAttribute('label')}</span>
+                ${super.render()}
             </label>
-            ${super.render()}
         `
 
         const el = this.querySelector('input')
