@@ -19,6 +19,7 @@ export class SubstrateEmail extends Input {
         emailOk:ReturnType<typeof signal<boolean>>;
         hasFocused:ReturnType<typeof signal<boolean>>;
         hasBlurred:ReturnType<typeof signal<boolean>>;
+        isFocused:ReturnType<typeof signal<boolean>>;
     }
 
     _shouldShowErr:ReturnType<typeof computed<boolean>>
@@ -31,14 +32,16 @@ export class SubstrateEmail extends Input {
             hasValue: signal(false),
             emailOk: signal<boolean>(this.isValid),
             hasFocused: signal(false),
-            hasBlurred: signal(false)
+            hasBlurred: signal(false),
+            isFocused: signal(false)
         }
 
         this._shouldShowErr = computed<boolean>(() => {
             return (
                 this._email.hasFocused() &&
                 this._email.hasBlurred() &&
-                this._email.emailOk() === false
+                this._email.emailOk() === false &&
+                !(this._email.isFocused())
             )
         })
 
@@ -70,6 +73,7 @@ export class SubstrateEmail extends Input {
             }
 
             if (ok && this._lastEvent === 'invalid') {
+                // valid, and previously were invalid
                 this.dispatchEvent(new CustomEvent('valid'))
                 this._lastEvent = 'valid'
             }
@@ -103,10 +107,12 @@ export class SubstrateEmail extends Input {
 
         input?.addEventListener('blur', () => {
             this._email.hasBlurred(true)
+            this._email.isFocused(false)
         })
 
         input?.addEventListener('focus', () => {
             this._email.hasFocused(true)
+            this._email.isFocused(true)
         })
 
         input?.addEventListener('input', (ev) => {
@@ -151,7 +157,8 @@ export class SubstrateEmail extends Input {
         label?.classList.remove('error')
         if (this.classList.contains('error')) {
             // if there is an error message, then remove it
-            label?.removeChild(label.lastChild!)
+            const msg = label?.querySelector('span.errormsg')
+            msg?.remove()
             this.classList.remove('error')
         }
     }
