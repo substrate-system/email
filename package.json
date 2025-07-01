@@ -53,7 +53,7 @@
     }
   },
   "dependencies": {
-    "@substrate-system/input": "^0.0.15",
+    "@substrate-system/input": "^0.0.16",
     "alien-signals": "^2.0.5"
   },
   "devDependencies": {
