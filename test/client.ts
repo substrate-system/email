@@ -53,15 +53,6 @@ test('Email validation function', async t => {
 test('Required attribute behavior', async t => {
     t.plan(3)
 
-    // Clear previous elements
-    document.body.innerHTML = ''
-
-    // Create a required email input
-    document.body.innerHTML += `
-        <substrate-email required label="Required Email" name="tester">
-        </substrate-email>
-    `
-
     const requiredEl = await waitFor('substrate-email') as SubstrateEmail
     t.ok(requiredEl.hasAttribute('required'), 'Element has required attribute')
 
@@ -80,15 +71,7 @@ test('Required attribute behavior', async t => {
 test('Error display logic', async t => {
     t.plan(5)
 
-    // Clear previous elements
-    document.body.innerHTML = ''
-
-    document.body.innerHTML += `
-        <substrate-email label="Test Email" name="abc">
-        </substrate-email>
-    `
-
-    const emailEl = await waitFor('substrate-email') as SubstrateEmail
+    const emailEl = await waitFor('substrate-email#errors') as SubstrateEmail
     const input = emailEl.querySelector('input') as HTMLInputElement
 
     // Initially no error should be shown
@@ -148,17 +131,9 @@ test('Error display logic', async t => {
 test('Custom error messages', async t => {
     t.plan(2)
 
-    // Clear previous elements
-    document.body.innerHTML = ''
-
     // Create element with custom error message
-    const customErrorMsg = 'Please provide a proper email address!'
-    document.body.innerHTML += `
-        <substrate-email label="Custom Error" errormsg="${customErrorMsg}" name="def">
-        </substrate-email>
-    `
-
-    const emailEl = await waitFor('substrate-email') as SubstrateEmail
+    const customErrorMsg = 'My special message'
+    const emailEl = await waitFor('substrate-email#errormsgs') as SubstrateEmail
     const input = emailEl.querySelector('input') as HTMLInputElement
 
     // Type invalid email, focus and blur to trigger validation
@@ -179,21 +154,9 @@ test('Custom error messages', async t => {
 test('Required error message', async t => {
     t.plan(1)
 
-    // Clear previous elements
-    document.body.innerHTML = ''
-
     // Create required element with custom required message
     const requiredMsg = 'Email is mandatory!'
-    document.body.innerHTML += `
-        <substrate-email 
-            name="ghi"
-            label="the required email" 
-            required 
-            requiredmsg="${requiredMsg}">
-        </substrate-email>
-    `
-
-    const emailEl = await waitFor('substrate-email') as SubstrateEmail
+    const emailEl = await waitFor('substrate-email#reqmsg') as SubstrateEmail
     const input = emailEl.querySelector('input') as HTMLInputElement
 
     // Focus and blur without entering anything to trigger required validation
@@ -211,15 +174,7 @@ test('Required error message', async t => {
 test('Event dispatching', async t => {
     t.plan(2)
 
-    // Clear previous elements
-    document.body.innerHTML = ''
-
-    document.body.innerHTML += `
-        <substrate-email label="Events Test" name="foo">
-        </substrate-email>
-    `
-
-    const emailEl = await waitFor('substrate-email') as SubstrateEmail
+    const emailEl = await waitFor('substrate-email#events') as SubstrateEmail
     const input = emailEl.querySelector('input') as HTMLInputElement
 
     // Set up event listeners
@@ -264,15 +219,7 @@ test('Event dispatching', async t => {
 test('Accessibility attributes', async t => {
     t.plan(3)
 
-    // Clear previous elements
-    document.body.innerHTML = ''
-
-    document.body.innerHTML += `
-        <substrate-email label="Accessibility Test" name="bar">
-        </substrate-email>
-    `
-
-    const emailEl = await waitFor('substrate-email') as SubstrateEmail
+    const emailEl = await waitFor('substrate-email#a11y') as SubstrateEmail
     const input = emailEl.querySelector('input') as HTMLInputElement
 
     // Initially should not have aria-invalid

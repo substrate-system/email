@@ -6,7 +6,60 @@
     <script src="/reporter.js"></script>
 </head>
 <body>
-    <substrate-email placeholder="abc-123" label="foobar"></substrate-email>
+    <substrate-email required>
+        <label>
+            <span class="label">
+                hello
+            </span>
+            <input placeholder="abc@123.com" label="hello" required />
+        </label>
+    </substrate-email>
+
+    <substrate-email id="errors">
+        <label>
+            <span class="label">
+                hello
+            </span>
+            <input placeholder="abc@123.com" label="hello" required />
+        </label>
+    </substrate-email>
+
+    <substrate-email id="errormsgs" errormsg="My special message">
+        <label>
+            <span class="label">
+                hello
+            </span>
+            <input placeholder="abc@123.com" label="hello" required />
+        </label>
+    </substrate-email>
+
+    <substrate-email id="reqmsg" name="ghi" required requiredmsg="Email is mandatory!">
+        <label>
+            <span class="label">
+                the required email
+            </span>
+            <input placeholder="abc@123.com" label="hello" required />
+        </label>
+    </substrate-email>
+
+    <substrate-email id="events" name="ghi">
+        <label>
+            <span class="label">
+                the required email
+            </span>
+            <input placeholder="abc@123.com" label="hello" />
+        </label>
+    </substrate-email>
+
+    <substrate-email id="a11y" name="ok">
+        <label>
+            <span class="label">
+                Accessibility attributes testing
+            </span>
+            <input placeholder="abc@123.com" label="hello" />
+        </label>
+    </substrate-email>
+
     <script src="/client-bundle.js"></script>
 </body>
 </html>
