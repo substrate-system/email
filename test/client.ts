@@ -1,6 +1,6 @@
 import { test } from '@substrate-system/tapzero'
 import { waitFor, sleep } from '@substrate-system/dom'
-import { SubstrateEmail, isValid } from '../src/client.js'
+import { SubstrateEmail, isValid } from '../src/index.js'
 import { html } from '../src/html.js'
 
 let el:SubstrateEmail

@@ -12,7 +12,7 @@ declare global {
 
 export class SubstrateEmail extends Input {
     static observedAttributes = ['name', 'disabled']
-    static tag = 'substrate-email'
+    static TAG = 'substrate-email'
 
     _email:{
         hasValue:ReturnType<typeof signal<boolean>>;
