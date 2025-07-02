@@ -139,7 +139,7 @@ Override the `tag` property to change the tag name:
 import { SubstrateEmail } from '@substrate-system/email'
 
 // set a custom name
-SubstrateEmail.tag = 'cool-input'
+SubstrateEmail.TAG = 'cool-input'
 
 SubstrateEmail.define()
 ```
