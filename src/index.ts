@@ -1,7 +1,5 @@
-import { signal, computed, effect } from 'alien-signals'
+import { type Sign, sign, computed, effect } from '@substrate-system/signs'
 import { Input } from '@substrate-system/input'
-// import Debug from '@substrate-system/debug'
-// const debug = Debug()
 
 // for docuement.querySelector
 declare global {
@@ -15,33 +13,33 @@ export class SubstrateEmail extends Input {
     static TAG = 'substrate-email'
 
     _email:{
-        hasValue:ReturnType<typeof signal<boolean>>;
-        emailOk:ReturnType<typeof signal<boolean>>;
-        hasFocused:ReturnType<typeof signal<boolean>>;
-        hasBlurred:ReturnType<typeof signal<boolean>>;
-        isFocused:ReturnType<typeof signal<boolean>>;
+        hasValue:Sign<boolean>;
+        emailOk:Sign<boolean>;
+        hasFocused:Sign<boolean>;
+        hasBlurred:Sign<boolean>;
+        isFocused:Sign<boolean>;
     }
 
-    _shouldShowErr:ReturnType<typeof computed<boolean>>
+    _shouldShowErr:Sign<boolean>
     _hasInput:boolean = false
     _lastEvent:'invalid'|'valid'|null = null
 
     constructor () {
         super()
         this._email = {
-            hasValue: signal(false),
-            emailOk: signal<boolean>(this.isValid),
-            hasFocused: signal(false),
-            hasBlurred: signal(false),
-            isFocused: signal(false)
+            hasValue: sign(false),
+            emailOk: sign<boolean>(this.isValid),
+            hasFocused: sign(false),
+            hasBlurred: sign(false),
+            isFocused: sign(false)
         }
 
         this._shouldShowErr = computed<boolean>(() => {
             return (
-                this._email.hasFocused() &&
-                this._email.hasBlurred() &&
-                this._email.emailOk() === false &&
-                !(this._email.isFocused())
+                this._email.hasFocused.value &&
+                this._email.hasBlurred.value &&
+                this._email.emailOk.value === false &&
+                !(this._email.isFocused.value)
             )
         })
 
@@ -52,7 +50,7 @@ export class SubstrateEmail extends Input {
 
         // show error UI
         effect(() => {
-            if (!this._shouldShowErr()) {
+            if (!this._shouldShowErr.value) {
                 return this.unRenderError()
             }
 
@@ -64,7 +62,7 @@ export class SubstrateEmail extends Input {
         // call this whenever emailOk changes
         // that is, whenever validity changes
         effect(() => {
-            const ok = this._email.emailOk()
+            const ok = this._email.emailOk.value
 
             if (!ok && this._lastEvent === 'valid') {
                 // if we are invalid, and previously were valid
@@ -106,13 +104,13 @@ export class SubstrateEmail extends Input {
         const input = this.input
 
         input?.addEventListener('blur', () => {
-            this._email.hasBlurred(true)
-            this._email.isFocused(false)
+            this._email.hasBlurred.value = true
+            this._email.isFocused.value = false
         })
 
         input?.addEventListener('focus', () => {
-            this._email.hasFocused(true)
-            this._email.isFocused(true)
+            this._email.hasFocused.value = true
+            this._email.isFocused.value = true
         })
 
         input?.addEventListener('input', (ev) => {
@@ -121,14 +119,14 @@ export class SubstrateEmail extends Input {
             if (!this._hasInput) this._hasInput = true
 
             if (this.hasAttribute('required') && !email) {
-                this._email.emailOk(false)
+                this._email.emailOk.value = false
             }
 
             const isOk = isValid(email, this.hasAttribute('required'))
 
             // if validity does not match current validity, then set it
-            if (isOk !== this._email.emailOk()) {
-                this._email.emailOk(isOk)
+            if (isOk !== this._email.emailOk.value) {
+                this._email.emailOk.value = isOk
             }
         })
     }
@@ -142,6 +140,23 @@ export class SubstrateEmail extends Input {
                 return true
             }
             return isValid(this.input?.value, false)
+        }
+    }
+
+    validate () {
+        const email = this.input!.value
+
+        if (!this._hasInput) this._hasInput = true
+
+        if (this.hasAttribute('required') && !email) {
+            this._email.emailOk.value = false
+        }
+
+        const isOk = isValid(email, this.hasAttribute('required'))
+
+        // if validity does not match current validity, then set it
+        if (isOk !== this._email.emailOk.value) {
+            this._email.emailOk.value = isOk
         }
     }
 
